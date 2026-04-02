@@ -1,0 +1,937 @@
+{
+  "timestamp": "2026-04-02T14:22:42.909407",
+  "total_iterations": 3,
+  "results": [
+    {
+      "submission_path": "c:\\evalforge\\llm-task-environment\\outputs\\submission_v1.py",
+      "loaded": true,
+      "load_errors": [],
+      "score": 0.7575757575757576,
+      "passed": 25,
+      "failed": 8,
+      "errors": 0,
+      "total": 33,
+      "test_results": [
+        {
+          "description": "Simple parent directory reference",
+          "input": "/home/user/../documents",
+          "expected": "/home/documents",
+          "passed": true,
+          "actual": "/home/documents",
+          "error": null
+        },
+        {
+          "description": "Current directory reference",
+          "input": "/home/user/./documents",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Multiple consecutive slashes",
+          "input": "/home//user///documents",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Trailing slash",
+          "input": "/home/user/documents/",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Root path only",
+          "input": "/",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Parent of root (should stay at root)",
+          "input": "/..",
+          "expected": "/",
+          "passed": false,
+          "actual": "/..",
+          "error": null
+        },
+        {
+          "description": "Multiple parent references from root",
+          "input": "/../..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Parent of root with trailing slash",
+          "input": "/../",
+          "expected": "/",
+          "passed": false,
+          "actual": "/..",
+          "error": null
+        },
+        {
+          "description": "Mixed . and .. with complex resolution",
+          "input": "/a/./b/../../c",
+          "expected": "/c",
+          "passed": true,
+          "actual": "/c",
+          "error": null
+        },
+        {
+          "description": "Multiple parent references clearing entire path",
+          "input": "/a/b/c/../../..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple consecutive parent references",
+          "input": "/a/b/c/../..",
+          "expected": "/a",
+          "passed": true,
+          "actual": "/a",
+          "error": null
+        },
+        {
+          "description": "Current directory at end of path",
+          "input": "/a/b/c/.",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Parent directory at end of path",
+          "input": "/a/b/c/..",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Double slash only",
+          "input": "//",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Triple slash only",
+          "input": "///",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Many consecutive slashes throughout",
+          "input": "////a////b////c////",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Double slashes between and at end",
+          "input": "/a//b//c//",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Trailing slash with multiple dirs",
+          "input": "/a/b/c/",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Only current directory references",
+          "input": "/./.",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple current directory references",
+          "input": "/a/./b/./c",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Consecutive current directory references",
+          "input": "/a/././b",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Parent references extending beyond original depth",
+          "input": "/a/b/c/../../../../../../d",
+          "expected": "/d",
+          "passed": false,
+          "actual": "/../d",
+          "error": null
+        },
+        {
+          "description": "Many parent references before reaching content",
+          "input": "/../../../../../../a/b",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Parent at root followed by directory (catches .. in result bug)",
+          "input": "/../x",
+          "expected": "/x",
+          "passed": false,
+          "actual": "/../x",
+          "error": null
+        },
+        {
+          "description": "Complex mix of parent and normal directory names",
+          "input": "/a/b/c/d/../e/f/../../g",
+          "expected": "/a/b/c/g",
+          "passed": true,
+          "actual": "/a/b/c/g",
+          "error": null
+        },
+        {
+          "description": "Accessing system paths with parent references",
+          "input": "/home/user/../../../etc/passwd",
+          "expected": "/etc/passwd",
+          "passed": false,
+          "actual": "/../etc/passwd",
+          "error": null
+        },
+        {
+          "description": "Interleaved current and parent directories",
+          "input": "/a/b/.././c",
+          "expected": "/a/c",
+          "passed": true,
+          "actual": "/a/c",
+          "error": null
+        },
+        {
+          "description": "Mixed slashes, dots, and parent references",
+          "input": "/a//b/./c/../d",
+          "expected": "/a/b/d",
+          "passed": true,
+          "actual": "/a/b/d",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/d1",
+          "expected": "/d0/d1",
+          "passed": false,
+          "actual": "/../d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/d1/../../d2/d3",
+          "expected": "/d2/d3",
+          "passed": false,
+          "actual": "/../d2/d3",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/../d1/d2/d3",
+          "expected": "/d1/d2/d3",
+          "passed": false,
+          "actual": "/../d1/d2/d3",
+          "error": null
+        }
+      ],
+      "failure_breakdown": {
+        "incorrect_results": [
+          {
+            "test": "Parent of root (should stay at root)",
+            "input": "/..",
+            "expected": "/",
+            "actual": "/.."
+          },
+          {
+            "test": "Parent of root with trailing slash",
+            "input": "/../",
+            "expected": "/",
+            "actual": "/.."
+          },
+          {
+            "test": "Parent references extending beyond original depth",
+            "input": "/a/b/c/../../../../../../d",
+            "expected": "/d",
+            "actual": "/../d"
+          },
+          {
+            "test": "Parent at root followed by directory (catches .. in result bug)",
+            "input": "/../x",
+            "expected": "/x",
+            "actual": "/../x"
+          },
+          {
+            "test": "Accessing system paths with parent references",
+            "input": "/home/user/../../../etc/passwd",
+            "expected": "/etc/passwd",
+            "actual": "/../etc/passwd"
+          },
+          {
+            "test": "Randomly generated adversarial case",
+            "input": "/../d0/d1",
+            "expected": "/d0/d1",
+            "actual": "/../d0/d1"
+          },
+          {
+            "test": "Randomly generated adversarial case",
+            "input": "/../d0/d1/../../d2/d3",
+            "expected": "/d2/d3",
+            "actual": "/../d2/d3"
+          },
+          {
+            "test": "Randomly generated adversarial case",
+            "input": "/../d0/../d1/d2/d3",
+            "expected": "/d1/d2/d3",
+            "actual": "/../d1/d2/d3"
+          }
+        ],
+        "exceptions": [],
+        "timeout_or_crash": []
+      },
+      "category_breakdown": {},
+      "version": "v1",
+      "timestamp": "2026-04-02T14:22:42.900117"
+    },
+    {
+      "submission_path": "c:\\evalforge\\llm-task-environment\\outputs\\submission_v2.py",
+      "loaded": true,
+      "load_errors": [],
+      "score": 0.8787878787878788,
+      "passed": 29,
+      "failed": 4,
+      "errors": 0,
+      "total": 33,
+      "test_results": [
+        {
+          "description": "Simple parent directory reference",
+          "input": "/home/user/../documents",
+          "expected": "/home/documents",
+          "passed": true,
+          "actual": "/home/documents",
+          "error": null
+        },
+        {
+          "description": "Current directory reference",
+          "input": "/home/user/./documents",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Multiple consecutive slashes",
+          "input": "/home//user///documents",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Trailing slash",
+          "input": "/home/user/documents/",
+          "expected": "/home/user/documents",
+          "passed": false,
+          "actual": "/home/user/documents/",
+          "error": null
+        },
+        {
+          "description": "Root path only",
+          "input": "/",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Parent of root (should stay at root)",
+          "input": "/..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple parent references from root",
+          "input": "/../..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Parent of root with trailing slash",
+          "input": "/../",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Mixed . and .. with complex resolution",
+          "input": "/a/./b/../../c",
+          "expected": "/c",
+          "passed": true,
+          "actual": "/c",
+          "error": null
+        },
+        {
+          "description": "Multiple parent references clearing entire path",
+          "input": "/a/b/c/../../..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple consecutive parent references",
+          "input": "/a/b/c/../..",
+          "expected": "/a",
+          "passed": true,
+          "actual": "/a",
+          "error": null
+        },
+        {
+          "description": "Current directory at end of path",
+          "input": "/a/b/c/.",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Parent directory at end of path",
+          "input": "/a/b/c/..",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Double slash only",
+          "input": "//",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Triple slash only",
+          "input": "///",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Many consecutive slashes throughout",
+          "input": "////a////b////c////",
+          "expected": "/a/b/c",
+          "passed": false,
+          "actual": "/a/b/c/",
+          "error": null
+        },
+        {
+          "description": "Double slashes between and at end",
+          "input": "/a//b//c//",
+          "expected": "/a/b/c",
+          "passed": false,
+          "actual": "/a/b/c/",
+          "error": null
+        },
+        {
+          "description": "Trailing slash with multiple dirs",
+          "input": "/a/b/c/",
+          "expected": "/a/b/c",
+          "passed": false,
+          "actual": "/a/b/c/",
+          "error": null
+        },
+        {
+          "description": "Only current directory references",
+          "input": "/./.",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple current directory references",
+          "input": "/a/./b/./c",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Consecutive current directory references",
+          "input": "/a/././b",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Parent references extending beyond original depth",
+          "input": "/a/b/c/../../../../../../d",
+          "expected": "/d",
+          "passed": true,
+          "actual": "/d",
+          "error": null
+        },
+        {
+          "description": "Many parent references before reaching content",
+          "input": "/../../../../../../a/b",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Parent at root followed by directory (catches .. in result bug)",
+          "input": "/../x",
+          "expected": "/x",
+          "passed": true,
+          "actual": "/x",
+          "error": null
+        },
+        {
+          "description": "Complex mix of parent and normal directory names",
+          "input": "/a/b/c/d/../e/f/../../g",
+          "expected": "/a/b/c/g",
+          "passed": true,
+          "actual": "/a/b/c/g",
+          "error": null
+        },
+        {
+          "description": "Accessing system paths with parent references",
+          "input": "/home/user/../../../etc/passwd",
+          "expected": "/etc/passwd",
+          "passed": true,
+          "actual": "/etc/passwd",
+          "error": null
+        },
+        {
+          "description": "Interleaved current and parent directories",
+          "input": "/a/b/.././c",
+          "expected": "/a/c",
+          "passed": true,
+          "actual": "/a/c",
+          "error": null
+        },
+        {
+          "description": "Mixed slashes, dots, and parent references",
+          "input": "/a//b/./c/../d",
+          "expected": "/a/b/d",
+          "passed": true,
+          "actual": "/a/b/d",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/d1/../../d2/d3",
+          "expected": "/d2/d3",
+          "passed": true,
+          "actual": "/d2/d3",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/../d1/d2/d3",
+          "expected": "/d1/d2/d3",
+          "passed": true,
+          "actual": "/d1/d2/d3",
+          "error": null
+        }
+      ],
+      "failure_breakdown": {
+        "incorrect_results": [
+          {
+            "test": "Trailing slash",
+            "input": "/home/user/documents/",
+            "expected": "/home/user/documents",
+            "actual": "/home/user/documents/"
+          },
+          {
+            "test": "Many consecutive slashes throughout",
+            "input": "////a////b////c////",
+            "expected": "/a/b/c",
+            "actual": "/a/b/c/"
+          },
+          {
+            "test": "Double slashes between and at end",
+            "input": "/a//b//c//",
+            "expected": "/a/b/c",
+            "actual": "/a/b/c/"
+          },
+          {
+            "test": "Trailing slash with multiple dirs",
+            "input": "/a/b/c/",
+            "expected": "/a/b/c",
+            "actual": "/a/b/c/"
+          }
+        ],
+        "exceptions": [],
+        "timeout_or_crash": []
+      },
+      "category_breakdown": {},
+      "version": "v2",
+      "timestamp": "2026-04-02T14:22:42.905065"
+    },
+    {
+      "submission_path": "c:\\evalforge\\llm-task-environment\\outputs\\submission_v3.py",
+      "loaded": true,
+      "load_errors": [],
+      "score": 1.0,
+      "passed": 33,
+      "failed": 0,
+      "errors": 0,
+      "total": 33,
+      "test_results": [
+        {
+          "description": "Simple parent directory reference",
+          "input": "/home/user/../documents",
+          "expected": "/home/documents",
+          "passed": true,
+          "actual": "/home/documents",
+          "error": null
+        },
+        {
+          "description": "Current directory reference",
+          "input": "/home/user/./documents",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Multiple consecutive slashes",
+          "input": "/home//user///documents",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Trailing slash",
+          "input": "/home/user/documents/",
+          "expected": "/home/user/documents",
+          "passed": true,
+          "actual": "/home/user/documents",
+          "error": null
+        },
+        {
+          "description": "Root path only",
+          "input": "/",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Parent of root (should stay at root)",
+          "input": "/..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple parent references from root",
+          "input": "/../..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Parent of root with trailing slash",
+          "input": "/../",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Mixed . and .. with complex resolution",
+          "input": "/a/./b/../../c",
+          "expected": "/c",
+          "passed": true,
+          "actual": "/c",
+          "error": null
+        },
+        {
+          "description": "Multiple parent references clearing entire path",
+          "input": "/a/b/c/../../..",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple consecutive parent references",
+          "input": "/a/b/c/../..",
+          "expected": "/a",
+          "passed": true,
+          "actual": "/a",
+          "error": null
+        },
+        {
+          "description": "Current directory at end of path",
+          "input": "/a/b/c/.",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Parent directory at end of path",
+          "input": "/a/b/c/..",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Double slash only",
+          "input": "//",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Triple slash only",
+          "input": "///",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Many consecutive slashes throughout",
+          "input": "////a////b////c////",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Double slashes between and at end",
+          "input": "/a//b//c//",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Trailing slash with multiple dirs",
+          "input": "/a/b/c/",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Only current directory references",
+          "input": "/./.",
+          "expected": "/",
+          "passed": true,
+          "actual": "/",
+          "error": null
+        },
+        {
+          "description": "Multiple current directory references",
+          "input": "/a/./b/./c",
+          "expected": "/a/b/c",
+          "passed": true,
+          "actual": "/a/b/c",
+          "error": null
+        },
+        {
+          "description": "Consecutive current directory references",
+          "input": "/a/././b",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Parent references extending beyond original depth",
+          "input": "/a/b/c/../../../../../../d",
+          "expected": "/d",
+          "passed": true,
+          "actual": "/d",
+          "error": null
+        },
+        {
+          "description": "Many parent references before reaching content",
+          "input": "/../../../../../../a/b",
+          "expected": "/a/b",
+          "passed": true,
+          "actual": "/a/b",
+          "error": null
+        },
+        {
+          "description": "Parent at root followed by directory (catches .. in result bug)",
+          "input": "/../x",
+          "expected": "/x",
+          "passed": true,
+          "actual": "/x",
+          "error": null
+        },
+        {
+          "description": "Complex mix of parent and normal directory names",
+          "input": "/a/b/c/d/../e/f/../../g",
+          "expected": "/a/b/c/g",
+          "passed": true,
+          "actual": "/a/b/c/g",
+          "error": null
+        },
+        {
+          "description": "Accessing system paths with parent references",
+          "input": "/home/user/../../../etc/passwd",
+          "expected": "/etc/passwd",
+          "passed": true,
+          "actual": "/etc/passwd",
+          "error": null
+        },
+        {
+          "description": "Interleaved current and parent directories",
+          "input": "/a/b/.././c",
+          "expected": "/a/c",
+          "passed": true,
+          "actual": "/a/c",
+          "error": null
+        },
+        {
+          "description": "Mixed slashes, dots, and parent references",
+          "input": "/a//b/./c/../d",
+          "expected": "/a/b/d",
+          "passed": true,
+          "actual": "/a/b/d",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/d0/d1",
+          "expected": "/d0/d1",
+          "passed": true,
+          "actual": "/d0/d1",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/d1/../../d2/d3",
+          "expected": "/d2/d3",
+          "passed": true,
+          "actual": "/d2/d3",
+          "error": null
+        },
+        {
+          "description": "Randomly generated adversarial case",
+          "input": "/../d0/../d1/d2/d3",
+          "expected": "/d1/d2/d3",
+          "passed": true,
+          "actual": "/d1/d2/d3",
+          "error": null
+        }
+      ],
+      "failure_breakdown": {
+        "incorrect_results": [],
+        "exceptions": [],
+        "timeout_or_crash": []
+      },
+      "category_breakdown": {},
+      "version": "v3",
+      "timestamp": "2026-04-02T14:22:42.909146"
+    }
+  ],
+  "summary": {
+    "best_score": 1.0,
+    "best_version": "v3",
+    "improvement": 0.24242424242424243
+  }
+}

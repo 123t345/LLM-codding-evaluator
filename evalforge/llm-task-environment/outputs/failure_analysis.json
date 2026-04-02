@@ -1,0 +1,220 @@
+{
+  "total_versions": 3,
+  "summary": {
+    "best_score": 1.0,
+    "best_version": "v3",
+    "improvement": 0.24242424242424243
+  },
+  "by_version": {
+    "v1": {
+      "score": 0.7575757575757576,
+      "passed": 25,
+      "failed": 8,
+      "errors": 0,
+      "top_failures": [
+        {
+          "test": "Parent of root (should stay at root)",
+          "category": "parent_directory_handling"
+        },
+        {
+          "test": "Parent of root with trailing slash",
+          "category": "parent_directory_handling"
+        },
+        {
+          "test": "Parent references extending beyond original depth",
+          "category": "parent_directory_handling"
+        },
+        {
+          "test": "Parent at root followed by directory (catches .. in result bug)",
+          "category": "parent_directory_handling"
+        },
+        {
+          "test": "Accessing system paths with parent references",
+          "category": "parent_directory_handling"
+        },
+        {
+          "test": "Randomly generated adversarial case",
+          "category": "complex_mixed_operations"
+        },
+        {
+          "test": "Randomly generated adversarial case",
+          "category": "complex_mixed_operations"
+        },
+        {
+          "test": "Randomly generated adversarial case",
+          "category": "complex_mixed_operations"
+        }
+      ],
+      "exception_summary": []
+    },
+    "v2": {
+      "score": 0.8787878787878788,
+      "passed": 29,
+      "failed": 4,
+      "errors": 0,
+      "top_failures": [
+        {
+          "test": "Trailing slash",
+          "category": "slash_handling"
+        },
+        {
+          "test": "Many consecutive slashes throughout",
+          "category": "slash_handling"
+        },
+        {
+          "test": "Double slashes between and at end",
+          "category": "slash_handling"
+        },
+        {
+          "test": "Trailing slash with multiple dirs",
+          "category": "slash_handling"
+        }
+      ],
+      "exception_summary": []
+    },
+    "v3": {
+      "score": 1.0,
+      "passed": 33,
+      "failed": 0,
+      "errors": 0,
+      "top_failures": [],
+      "exception_summary": []
+    }
+  },
+  "failure_categories": {
+    "parent_directory_handling": {
+      "count": 5,
+      "tests": [
+        {
+          "version": "v1",
+          "test": "Parent of root (should stay at root)",
+          "input": "/..",
+          "expected": "/",
+          "actual": "/.."
+        },
+        {
+          "version": "v1",
+          "test": "Parent of root with trailing slash",
+          "input": "/../",
+          "expected": "/",
+          "actual": "/.."
+        },
+        {
+          "version": "v1",
+          "test": "Parent references extending beyond original depth",
+          "input": "/a/b/c/../../../../../../d",
+          "expected": "/d",
+          "actual": "/../d"
+        },
+        {
+          "version": "v1",
+          "test": "Parent at root followed by directory (catches .. in result bug)",
+          "input": "/../x",
+          "expected": "/x",
+          "actual": "/../x"
+        },
+        {
+          "version": "v1",
+          "test": "Accessing system paths with parent references",
+          "input": "/home/user/../../../etc/passwd",
+          "expected": "/etc/passwd",
+          "actual": "/../etc/passwd"
+        }
+      ]
+    },
+    "complex_mixed_operations": {
+      "count": 3,
+      "tests": [
+        {
+          "version": "v1",
+          "test": "Randomly generated adversarial case",
+          "input": "/../d0/d1",
+          "expected": "/d0/d1",
+          "actual": "/../d0/d1"
+        },
+        {
+          "version": "v1",
+          "test": "Randomly generated adversarial case",
+          "input": "/../d0/d1/../../d2/d3",
+          "expected": "/d2/d3",
+          "actual": "/../d2/d3"
+        },
+        {
+          "version": "v1",
+          "test": "Randomly generated adversarial case",
+          "input": "/../d0/../d1/d2/d3",
+          "expected": "/d1/d2/d3",
+          "actual": "/../d1/d2/d3"
+        }
+      ]
+    },
+    "slash_handling": {
+      "count": 4,
+      "tests": [
+        {
+          "version": "v2",
+          "test": "Trailing slash",
+          "input": "/home/user/documents/",
+          "expected": "/home/user/documents",
+          "actual": "/home/user/documents/"
+        },
+        {
+          "version": "v2",
+          "test": "Many consecutive slashes throughout",
+          "input": "////a////b////c////",
+          "expected": "/a/b/c",
+          "actual": "/a/b/c/"
+        },
+        {
+          "version": "v2",
+          "test": "Double slashes between and at end",
+          "input": "/a//b//c//",
+          "expected": "/a/b/c",
+          "actual": "/a/b/c/"
+        },
+        {
+          "version": "v2",
+          "test": "Trailing slash with multiple dirs",
+          "input": "/a/b/c/",
+          "expected": "/a/b/c",
+          "actual": "/a/b/c/"
+        }
+      ]
+    }
+  },
+  "exception_types": {},
+  "common_wrong_answers": {
+    "/..": 2,
+    "/../d": 1,
+    "/../x": 1,
+    "/../etc/passwd": 1,
+    "/../d0/d1": 1,
+    "/../d2/d3": 1,
+    "/../d1/d2/d3": 1,
+    "/home/user/documents/": 1,
+    "/a/b/c/": 3
+  },
+  "improvement_trajectory": [
+    {
+      "version": "v1",
+      "score": 0.7575757575757576,
+      "passed": 25,
+      "failed": 8,
+      "errors": 0
+    },
+    {
+      "version": "v2",
+      "score": 0.8787878787878788,
+      "passed": 29,
+      "failed": 4,
+      "errors": 0
+    },
+    {
+      "version": "v3",
+      "score": 1.0,
+      "passed": 33,
+      "failed": 0,
+      "errors": 0
+    }
+  ]
+}
